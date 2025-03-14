@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const targetX = 300;
 const PI = 3.14
-const marginOfError = 0.05; // Strict floating-point tolerance
+const marginOfError = 0.1; // Strict floating-point tolerance
 const gravity = 9.81;
 const interval = 5; // Faster animation update
 
