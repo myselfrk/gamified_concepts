@@ -55,7 +55,7 @@ const ProjectileGame = () => {
   return (
     <div className="text-center p-6 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-bold">🎯 Projectile Motion Game</h1>
-      <h1 className="text-2m font-bold mb-4">(Assume either the angle or the velocity is given, g = 9.8 m/s^2 and margin of error = 1 m)</h1>
+      <h3 className="text-xs mb-4">(Assume either the angle or the velocity is given, g = 9.8 m/s^2 and margin of error = 1 m)</h3>
       <div className="mb-4">
         <label className="block text-lg font-semibold">Angle (degrees):</label>
         <input 
