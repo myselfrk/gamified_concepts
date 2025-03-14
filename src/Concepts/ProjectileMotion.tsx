@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const ProjectileGame = () => {
   const [angle, setAngle] = useState(45);
   const [velocity, setVelocity] = useState(54.28);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [launched, setLaunched] = useState(false);
-  const [time, setTime] = useState(0);
+  const [, setTime] = useState<number>(0);
   const [message, setMessage] = useState("");
   const targetX = 300;
   const marginOfError = 5; // Small tolerance for floating-point errors
@@ -14,7 +14,7 @@ const ProjectileGame = () => {
   const interval = 20; // Smaller intervals for more accuracy
 
   useEffect(() => {
-    let timer;
+    let timer: number;
     if (launched) {
       timer = setInterval(() => {
         setTime((prevTime) => {
