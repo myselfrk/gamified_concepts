@@ -1,39 +1,40 @@
 import { useState, useEffect } from "react";
 
+const targetX = 300;
+const PI = 3.14
+const marginOfError = 0.05; // Strict floating-point tolerance
+const gravity = 9.81;
+const interval = 5; // Faster animation update
+
 const ProjectileGame = () => {
   const [angle, setAngle] = useState(45);
-  const [velocity, setVelocity] = useState(0);
+  const [velocity, setVelocity] = useState(0); 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [launched, setLaunched] = useState(false);
-  const [, setTime] = useState<number>(0);
+  const [, setTime] = useState(0);
   const [message, setMessage] = useState("");
-  const targetX = 300;
-  const marginOfError = 5; // Small tolerance for floating-point errors
-
-  const gravity = 9.81;
-  const interval = 20; // Smaller intervals for more accuracy
 
   useEffect(() => {
-    let timer: number;
+    let timer : number;
     if (launched) {
       timer = setInterval(() => {
         setTime((prevTime) => {
-          const newTime = prevTime + interval / 1000;
-          const radianAngle = (angle * Math.PI) / 180;
-          const x = velocity * newTime * Math.cos(radianAngle);
-          const y = velocity * newTime * Math.sin(radianAngle) - 0.5 * gravity * Math.pow(newTime, 2);
+          const newTime = prevTime + 0.02; // Faster simulation steps
+          const radianAngle = (angle * PI) / 180;
           
-          // Stop if projectile hits ground
+          const x = velocity * newTime * Math.cos(radianAngle); // s = ut + 1/2 at^2  // a = 0
+          const y = velocity * newTime * Math.sin(radianAngle) - 0.5 * gravity * newTime * newTime;  // s = ut + 1/2 at^2  
+
           if (y <= 0) {
             clearInterval(timer);
             setLaunched(false);
-            
-            // Check if target is within the allowed margin
-            if (Math.abs(targetX - x) <= marginOfError) {
+            const finalX = parseFloat(x.toFixed(2));
+            if (Math.abs(targetX - finalX) <= marginOfError) {
               setMessage("🎯 Success! You hit the target!");
             } else {
-              setMessage(`❌ Missed! You landed at ${x.toFixed(2)}m. Try again.`);
+              setMessage(`❌ Missed! Final X: ${finalX}m, Target: ${targetX}m`);
             }
+            setPosition({ x, y });
             return prevTime;
           }
 
@@ -54,8 +55,8 @@ const ProjectileGame = () => {
 
   return (
     <div className="text-center p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-bold">🎯 Projectile Motion Game</h1>
-      <h3 className="text-xs mb-4">(Assume either the angle or the velocity is given, g = 9.81 m/s^2 and margin of error = 1 m)</h3>
+      <h1 className="text-2xl font-bold">Projectile Motion Game</h1>
+      <p className="text-sm text-gray-600 mb-4">{`(Assume either the angle or the velocity is given, g = ${gravity} m/s^2, margin of error = ${marginOfError} m, PI= ${PI})`}</p>
       <div className="mb-4">
         <label className="block text-lg font-semibold">Angle (degrees):</label>
         <input 
