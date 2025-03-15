@@ -11,7 +11,7 @@ const ProjectileGame = () => {
   const [velocity, setVelocity] = useState(0); 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [launched, setLaunched] = useState(false);
-  const [, setTime] = useState(0);
+  const [timeOfFlight, setTime] = useState(0);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -22,8 +22,8 @@ const ProjectileGame = () => {
           const newTime = prevTime + 0.02; // Faster simulation steps
           const radianAngle = (angle * PI) / 180;
           
-          const x = velocity * newTime * Math.cos(radianAngle); // s = ut + 1/2 at^2  // a = 0
-          const y = velocity * newTime * Math.sin(radianAngle) - 0.5 * gravity * newTime * newTime;  // s = ut + 1/2 at^2  
+          const x = velocity * newTime * +Math.cos(radianAngle).toFixed(2); // s = ut + 1/2 at^2  // a = 0
+          const y = velocity * newTime * +Math.sin(radianAngle).toFixed(2) - 0.5 * gravity * newTime * newTime;  // s = ut + 1/2 at^2  
 
           if (y <= 0) {
             clearInterval(timer);
@@ -82,6 +82,7 @@ const ProjectileGame = () => {
         Launch
       </button>
       <div className="relative w-[400px] h-[200px] border border-black mt-6 mx-auto bg-white">
+      <p className="text-sm text-gray-600 mb-4">Time Of Flight : {timeOfFlight.toFixed(2)}</p>
         <div 
           className="absolute w-4 h-4 bg-red-500 rounded-full" 
           style={{ left: `${position.x}px`, bottom: `${position.y}px` }}
